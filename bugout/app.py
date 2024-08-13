@@ -41,6 +41,20 @@ class Bugout:
         return ping(self.spire_api_url)
 
     # User handlers
+    def auth(
+        self,
+        token: Union[str, uuid.UUID],
+        timeout: float = REQUESTS_TIMEOUT,
+        auth_type: str = data.AuthType.bearer.name,
+        **kwargs: Dict[str, Any],
+    ):
+        self.user.timeout = timeout
+        return self.user.auth(
+            token=token,
+            auth_type=data.AuthType[auth_type],
+            **kwargs,
+        )
+
     def create_user(
         self,
         username: Optional[str] = None,
