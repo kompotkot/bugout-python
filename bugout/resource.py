@@ -5,10 +5,10 @@ from typing import Any, Dict, Optional, Union
 from .calls import make_request
 from .data import (
     BugoutResource,
-    BugoutResources,
-    Method,
     BugoutResourceHolder,
     BugoutResourceHolders,
+    BugoutResources,
+    Method,
 )
 from .exceptions import InvalidUrlSpec
 from .settings import REQUESTS_TIMEOUT

@@ -4,23 +4,18 @@ integration: https://github.com/bugout-dev/thorax
 """
 
 import argparse
-from datetime import datetime
-from enum import Enum
 import json
 import os
+from datetime import datetime
+from enum import Enum
+from typing import Callable, List, Optional
+
 import requests  # type: ignore
-from typing import Callable, Optional, List
 
 from .app import Bugout
-from .data import (
-    AuthType,
-    BugoutSearchResultWithEntryID,
-    BugoutSearchResult,
-    BugoutSearchResult,
-)
+from .data import AuthType, BugoutSearchResult, BugoutSearchResultWithEntryID
 from .journal import SearchOrder
 from .settings import BUGOUT_BROOD_URL, BUGOUT_SPIRE_URL, REQUESTS_TIMEOUT
-
 
 DEFAULT_CONTEXT_TYPE = "job"
 DEFAULT_SUCCESS_TAG = "job:success"

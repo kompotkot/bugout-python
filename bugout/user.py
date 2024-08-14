@@ -2,9 +2,17 @@ import uuid
 from typing import Any, Dict, List, Optional, Union
 
 from .calls import make_request
-from .data import AuthType, BugoutToken, BugoutUser, BugoutUserTokens, Method, TokenType
+from .data import (
+    AuthType,
+    BugoutToken,
+    BugoutUser,
+    BugoutUserTokens,
+    BugoutUserWithGroups,
+    Method,
+    TokenType,
+)
 from .exceptions import InvalidUrlSpec, TokenInvalidParameters
-from .settings import REQUESTS_TIMEOUT, BUGOUT_APPLICATION_ID_HEADER
+from .settings import BUGOUT_APPLICATION_ID_HEADER, REQUESTS_TIMEOUT
 
 
 class User:
@@ -26,6 +34,20 @@ class User:
         return result
 
     # User module
+    def auth(
+        self,
+        token: Union[str, uuid.UUID],
+        auth_type: AuthType = AuthType.bearer,
+        **kwargs: Dict[str, Any],
+    ) -> BugoutUserWithGroups:
+        headers = {
+            "Authorization": f"{auth_type.value} {token}",
+        }
+        if "headers" in kwargs.keys():
+            headers.update(kwargs["headers"])
+        result = self._call(method=Method.get, path="auth", headers=headers)
+        return BugoutUserWithGroups(**result)
+
     def create_user(
         self,
         username: Optional[str] = None,
